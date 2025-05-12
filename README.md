@@ -171,7 +171,11 @@ For support with this resource:
 
 ## 📝 License
 
-This resource is protected by license key authentication. Unauthorized distribution is prohibited.
+This resource is **FREE** for the community. You may use and modify it as you wish, but please respect the following:
+
+- Do not redistribute as paid content
+- Maintain credits to original author
+- Share improvements with the community
 
 ---
 
