@@ -1,0 +1,1790 @@
+:root {
+    --primary: #343a3f;
+    --primary-hover: #4a5056;
+    --secondary: #505a63;
+    --accent: #5d6771;
+    --danger: #fc5c65;
+    --warning: #fed330;
+    --success: #26de81;
+    --bg-dark: #1a1d20;
+    --bg-primary: #23272b;
+    --bg-secondary: #2c3034;
+    --bg-tertiary: #343a3f;
+    --bg-card: #2d3236;
+    --fuel-color: #fed330;
+    --engine-color: #26de81;
+    --body-color: #5d6771;
+    --text-primary: #f2f3f8;
+    --text-secondary: #a0aec0;
+    --text-muted: #6b7280;
+    --border-radius: 8px;
+    --card-height: 350px;
+    --transition: all 0.2s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(93, 103, 113, 0.8) rgba(26, 29, 32, 0.7);
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background-color: transparent;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+button {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+input {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+#app {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#quantum-garage {
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    top: 12.5%;
+    left: 12.5%;
+    background-color: var(--bg-dark);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    border-radius: 10px;
+}
+
+.garage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: var(--bg-dark);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.garage-logo {
+    width: 36px;
+    height: 36px;
+    background-color: var(--primary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text-primary);
+}
+
+.garage-title h1 {
+    font-size: 16px;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.garage-title span {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.garage-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 220px;
+}
+
+#quantum-search {
+    width: 100%;
+    height: 36px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    padding: 0 35px 0 12px;
+    font-size: 13px;
+}
+
+#quantum-search:focus {
+    border-color: var(--secondary);
+    outline: none;
+}
+
+#quantum-search::placeholder {
+    color: var(--text-muted);
+}
+
+.search-btn {
+    position: absolute;
+    right: 5px;
+    top: 7px;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.search-btn:hover {
+    color: var(--text-primary);
+}
+
+.control-btn {
+    height: 36px;
+    width: 36px;
+    padding: 0;
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn .btn-icon {
+    display: flex;
+    align-items: center;
+}
+
+.control-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.control-btn:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.garage-sidebar {
+    width: 160px;
+    background-color: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    color: var(--text-secondary);
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav-item svg {
+    width: 16px;
+    height: 16px;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.nav-item:hover svg {
+    color: var(--text-primary);
+}
+
+.nav-item.active {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border-left: 3px solid var(--primary);
+}
+
+.nav-item.active svg {
+    color: var(--text-primary);
+}
+
+#manage-shared {
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+.garage-content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    background-color: var(--bg-dark);
+}
+
+.vehicle-grid {
+    flex: 1;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-auto-rows: min-content;
+    gap: 15px;
+    overflow-y: auto;
+    max-height: calc(100vh - 60px);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.vehicle-card {
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-height: 300px;
+}
+
+.vehicle-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-color: var(--secondary);
+}
+
+.vehicle-card.selected {
+    border: 1px solid var(--primary);
+}
+
+.vehicle-image {
+    height: 110px;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.vehicle-image img {
+    max-width: 90%;
+    max-height: 85%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.vehicle-card:hover .vehicle-image img {
+    transform: scale(1.05);
+}
+
+.vehicle-info {
+    padding: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.vehicle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.vehicle-title {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.vehicle-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 15px;
+}
+
+.vehicle-plate {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    display: inline-block;
+}
+
+.vehicle-status-tags {
+    display: flex;
+    gap: 5px;
+}
+
+.status-tag {
+    padding: 2px 6px;
+    font-size: 9px;
+    font-weight: 600;
+    border-radius: 3px;
+}
+
+.status-tag.out {
+    background-color: var(--danger);
+    color: white;
+}
+
+.status-tag.shared {
+    background-color: var(--secondary);
+    color: white;
+}
+
+.status-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.status-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.status-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+}
+
+.status-label span:first-child {
+    color: var(--text-secondary);
+}
+
+.status-value {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.progress-bar {
+    height: 4px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.progress-fill.fuel {
+    background-color: var(--fuel-color);
+}
+
+.progress-fill.engine {
+    background-color: var(--engine-color);
+}
+
+.progress-fill.body {
+    background-color: var(--body-color);
+}
+
+.vehicle-actions {
+    margin-top: 10px;
+}
+
+.take-out-btn {
+    width: 100%;
+    height: 34px;
+    border-radius: var(--border-radius);
+    font-size: 13px;
+    font-weight: 500;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.take-out-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+.take-out-btn:disabled {
+    background-color: var(--bg-tertiary);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+.take-out-btn.out {
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+.favorite-toggle {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 24px;
+    height: 24px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: var(--text-muted);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.favorite-toggle.active {
+    background-color: var(--warning);
+    color: white;
+}
+
+.favorite-toggle:hover {
+    transform: scale(1.1);
+}
+
+.vehicle-info-panel {
+    width: 300px;
+    background-color: var(--bg-dark);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-container {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.info-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-header h2 {
+    font-size: 18px;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+}
+
+.info-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.no-selection-message {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    text-align: center;
+    padding: 30px 0;
+}
+
+.pulse-icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--bg-tertiary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    animation: pulse 2s infinite alternate;
+}
+
+.pulse-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.no-selection-message p {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.specs-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.spec-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.spec-item svg {
+    width: 16px;
+    height: 16px;
+    color: var(--text-secondary);
+}
+
+.spec-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.spec-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.spec-value {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.status-container {
+    margin-bottom: 20px;
+}
+
+.status-container h3 {
+    font-size: 15px;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.vehicle-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    height: 38px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 15px;
+    flex: 1 0 auto;
+}
+
+.action-icon {
+    display: flex;
+    align-items: center;
+}
+
+.action-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.primary-action {
+    background-color: var(--primary);
+    color: white;
+    width: 100%;
+}
+
+.primary-action:hover {
+    background-color: var(--primary-hover);
+}
+
+.primary-action:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.secondary-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+}
+
+.secondary-action {
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-size: 12px;
+    padding: 0 10px;
+    flex: 1;
+}
+
+.secondary-action:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.favorite-icon.active {
+    color: var(--warning);
+}
+
+.empty-state {
+    position: absolute;
+    top: 0;
+    left: 160px; /* Width of the sidebar */
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(26, 29, 32, 0.9);
+    backdrop-filter: blur(3px);
+    z-index: 20;
+}
+
+.empty-icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--bg-tertiary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    color: var(--text-secondary);
+}
+
+.empty-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.empty-state h2 {
+    font-size: 18px;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(26, 29, 32, 0.8);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(3px);
+}
+
+.garage-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.loader-ring {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--bg-tertiary);
+    border-top: 3px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.garage-loader span {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.garage-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    backdrop-filter: none;
+}
+
+.modal-container {
+    position: relative;
+    width: 400px;
+    max-width: 90vw;
+    background-color: var(--bg-primary);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--bg-tertiary);
+    overflow: hidden;
+    animation: modal-appear 0.3s ease;
+    z-index: 1001;
+    pointer-events: auto;
+}
+
+#garage-selection-modal .modal-container {
+    min-width: 450px;
+    max-width: 500px;
+    background-color: var(--bg-primary);
+}
+
+#garage-selection-modal .modal-header {
+    padding: 20px;
+    background-color: var(--bg-dark);
+    border-bottom-color: var(--bg-tertiary);
+}
+
+#garage-selection-modal .modal-header h2 {
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
+
+#garage-selection-modal .modal-body {
+    padding: 24px;
+    max-height: none;
+}
+
+#garage-selection-modal .modal-description {
+    font-size: 15px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+#garage-selection-modal .garage-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#garage-selection-modal .garage-option {
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    padding: 16px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    border: 1px solid var(--bg-tertiary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#garage-selection-modal .garage-option:hover {
+    background-color: var(--bg-tertiary);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#garage-selection-modal .garage-option.owned {
+    border-left: 4px solid var(--primary);
+}
+
+#shared-garage-selector-modal .modal-container {
+    min-width: 450px;
+    max-width: 500px;
+    background-color: var(--bg-primary);
+}
+
+#shared-garage-selector-modal .modal-header {
+    padding: 20px;
+    background-color: var(--bg-dark);
+    border-bottom-color: var(--bg-tertiary);
+}
+
+#shared-garage-selector-modal .modal-header h2 {
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
+
+#shared-garage-selector-modal .modal-body {
+    padding: 24px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+#shared-garage-selector-modal .modal-description {
+    font-size: 15px;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+#shared-garage-selector-modal .shared-garage-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#shared-garage-selector-modal .shared-garage-item {
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    padding: 16px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    border: 1px solid var(--bg-tertiary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#shared-garage-selector-modal .shared-garage-item:hover {
+    background-color: var(--bg-tertiary);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#shared-garage-selector-modal .shared-garage-item.owned {
+    border-left: 4px solid var(--primary);
+}
+
+.shared-garage-container {
+    width: 450px;
+}
+
+@keyframes modal-appear {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--bg-tertiary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-dark);
+}
+
+.modal-header h2 {
+    font-size: 16px;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+#shared-garage-modal .modal-container,
+#garage-selection-modal .modal-container,
+#members-modal .modal-container,
+#join-request-modal .modal-container,
+#rename-modal .modal-container,
+#shared-garage-selector-modal .modal-container {
+    background-color: var(--bg-primary);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--bg-tertiary);
+}
+
+.close-modal {
+    width: 28px;
+    height: 28px;
+    background-color: var(--bg-tertiary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    z-index: 10;
+}
+
+.close-modal:hover {
+    background-color: var(--primary);
+    color: var(--text-primary);
+}
+
+.shared-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--bg-tertiary);
+    background-color: var(--bg-secondary);
+}
+
+.shared-tab {
+    flex: 1;
+    padding: 12px 0;
+    text-align: center;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.shared-tab:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.shared-tab.active {
+    color: white;
+    border-bottom-color: var(--primary);
+    background-color: var(--primary);
+}
+
+.modal-body {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+.tab-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-content.hidden {
+    display: none;
+}
+
+.garage-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.garage-item {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.garage-item:hover {
+    background-color: var(--bg-tertiary);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.garage-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.garage-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.owner-badge {
+    background-color: var(--primary);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.garage-code {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.garage-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.garage-btn {
+    height: 32px;
+    border-radius: var(--border-radius);
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.garage-btn.primary {
+    background-color: var(--primary);
+    color: white;
+    min-width: 70px;
+}
+
+.garage-btn.primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.garage-btn.secondary {
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.garage-btn.secondary:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.garage-btn.danger {
+    background-color: var(--danger);
+    color: white;
+    min-width: 70px;
+}
+
+.garage-btn.danger:hover {
+    background-color: #e84855;
+}
+
+.garage-btn.success {
+    background-color: var(--success);
+    color: white;
+    min-width: 70px;
+}
+
+.garage-btn.success:hover {
+    background-color: #20c974;
+}
+
+.garage-btn.full-width {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.garage-actions .garage-btn {
+    height: 30px;
+    padding: 0 10px;
+    font-size: 11px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.garage-input {
+    width: 100%;
+    height: 36px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    padding: 0 12px;
+    font-size: 13px;
+}
+
+.garage-input:focus {
+    border-color: var(--secondary);
+    outline: none;
+}
+
+.garage-input::placeholder {
+    color: var(--text-muted);
+}
+
+.input-container {
+    padding: 10px 0;
+}
+
+.modal-footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--bg-tertiary);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    background-color: var(--bg-secondary);
+}
+
+.modal-footer.split {
+    justify-content: space-between;
+}
+
+.remove-shared-btn {
+    background-color: var(--danger) !important;
+    color: white !important;
+}
+
+.remove-shared-btn:hover {
+    background-color: #e84855 !important;
+}
+
+.vehicle-hover-panel {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 90;
+    animation: slide-up 0.3s ease;
+    pointer-events: auto;
+}
+
+.hover-content {
+    width: 280px;
+    background-color: var(--bg-primary);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--bg-tertiary);
+}
+
+.hover-header {
+    padding: 12px;
+    background-color: var(--bg-secondary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hover-header h3 {
+    font-size: 14px;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.hover-plate {
+    font-size: 11px;
+    color: var(--accent);
+    background-color: rgba(93, 103, 113, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.hover-stats {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.hover-stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stat-name {
+    font-size: 12px;
+    color: var(--text-secondary);
+    min-width: 40px;
+}
+
+.hover-stat-bar {
+    flex: 1;
+    height: 4px;
+    background-color: var(--bg-tertiary);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.hover-stat-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.hover-stat-fill.fuel {
+    background-color: var(--fuel-color);
+}
+
+.hover-stat-fill.engine {
+    background-color: var(--engine-color);
+}
+
+.hover-stat-fill.body {
+    background-color: var(--body-color);
+}
+
+.stat-value {
+    font-size: 12px;
+    color: var(--text-primary);
+    min-width: 30px;
+    text-align: right;
+    font-weight: 500;
+}
+
+.hover-actions {
+    padding: 0 12px 12px;
+    display: flex;
+    gap: 8px;
+}
+
+.hover-btn {
+    flex: 1;
+    height: 34px;
+    border-radius: var(--border-radius);
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.hover-btn:first-child {
+    background-color: var(--primary);
+    color: white;
+}
+
+.hover-btn:first-child:hover {
+    background-color: var(--primary-hover);
+}
+
+.hover-btn:last-child:hover {
+    background-color: var(--bg-hover);
+}
+
+.hover-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.hover-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.shared-garage-select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+    height: 100%;
+}
+
+.shared-garage-select-icon {
+    width: 70px;
+    height: 70px;
+    background-color: var(--bg-tertiary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.shared-garage-select-icon svg {
+    width: 35px;
+    height: 35px;
+    color: var(--text-secondary);
+}
+
+.shared-garage-select h2 {
+    font-size: 20px;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.shared-garage-select p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    max-width: 450px;
+}
+
+.shared-garage-select-btn {
+    background-color: var(--primary);
+    color: white;
+    border-radius: var(--border-radius);
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.shared-garage-select-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+.remove-vehicle-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: var(--text-muted);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.remove-vehicle-btn:hover {
+    background-color: var(--danger);
+    color: white;
+    transform: scale(1.1);
+}
+
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .vehicle-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+}
+
+@media screen and (max-width: 992px) {
+    #quantum-garage {
+        width: 85%;
+        height: 85%;
+        top: 7.5%;
+        left: 7.5%;
+    }
+    
+    .garage-sidebar {
+        width: 50px;
+    }
+    
+    .nav-item span {
+        display: none;
+    }
+    
+    .nav-item {
+        justify-content: center;
+        padding: 10px;
+    }
+    
+    .vehicle-info-panel {
+        width: 250px;
+    }
+    
+    .search-wrapper {
+        width: 180px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .garage-header {
+        padding: 10px;
+    }
+    
+    .logo-container {
+        gap: 8px;
+    }
+    
+    .garage-logo {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+    
+    .garage-title h1 {
+        font-size: 14px;
+    }
+    
+    .garage-title span {
+        font-size: 11px;
+    }
+    
+    .search-wrapper {
+        width: 150px;
+    }
+    
+    .vehicle-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 10px;
+        padding: 10px;
+    }
+}
+
+.vehicle-grid::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar,
+.tab-content::-webkit-scrollbar,
+.garage-list::-webkit-scrollbar,
+.members-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.vehicle-grid::-webkit-scrollbar-track,
+.modal-body::-webkit-scrollbar-track,
+.tab-content::-webkit-scrollbar-track,
+.garage-list::-webkit-scrollbar-track,
+.members-list::-webkit-scrollbar-track {
+    background: rgba(26, 29, 32, 0.7);
+    border-radius: 4px;
+}
+
+.vehicle-grid::-webkit-scrollbar-thumb,
+.modal-body::-webkit-scrollbar-thumb,
+.tab-content::-webkit-scrollbar-thumb,
+.garage-list::-webkit-scrollbar-thumb,
+.members-list::-webkit-scrollbar-thumb {
+    background: rgba(93, 103, 113, 0.8);
+    border-radius: 4px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s ease;
+}
+
+.vehicle-grid::-webkit-scrollbar-thumb:hover,
+.modal-body::-webkit-scrollbar-thumb:hover,
+.tab-content::-webkit-scrollbar-thumb:hover,
+.garage-list::-webkit-scrollbar-thumb:hover,
+.members-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(93, 103, 113, 1);
+}
+
+.vehicle-grid,
+.modal-body,
+.tab-content,
+.garage-list,
+.members-list {
+    overflow-y: overlay;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(93, 103, 113, 0.8) rgba(26, 29, 32, 0.7);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#transfer-btn {
+    background-color: var(--secondary);
+    color: white;
+}
+
+#transfer-btn:hover {
+    background-color: var(--primary);
+}
+
+#transfer-modal .modal-container {
+    width: 450px;
+    max-width: 95vw;
+}
+
+#transfer-modal .modal-description {
+    margin-bottom: 20px;
+    line-height: 1.5;
+    color: var(--text-primary);
+}
+
+#transfer-garage-select {
+    width: 100%;
+    height: 40px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    padding: 0 10px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+#transfer-garage-select:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+#transfer-garage-select option {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 10px;
+}
+
+@keyframes transfer-out {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateY(-20px) scale(0.9);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.8);
+    }
+}
+
+.vehicle-transferring {
+    animation: transfer-out 1s forwards;
+}
+
+.transfer-loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.transfer-loading-text {
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.status-tag.transfer {
+    background-color: var(--primary);
+    color: white;
+}
+
+.transfer-btn {
+    width: 100%;
+    height: 34px;
+    border-radius: var(--border-radius);
+    font-size: 13px;
+    font-weight: 500;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.transfer-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.favorite-toggle {
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.impound-header {
+    background-color: var(--danger);
+    color: white;
+    border-color: transparent;
+}
+
+.impound-badge {
+    background-color: var(--danger);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 500;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.impound-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+    background-color: var(--bg-secondary);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.impound-detail {
+    display: flex;
+    justify-content: space-between;
+}
+
+.impound-label {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.impound-value {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.impound-fee {
+    color: var(--danger);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.impound-warning {
+    color: var(--warning);
+    font-size: 12px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.impound-reason {
+    background-color: var(--bg-dark);
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.release-btn {
+    background-color: var(--danger);
+    color: white;
+}
+
+.release-btn:hover {
+    background-color: #d04649;
+}
+
+.vehicle-card.impounded {
+    border-left: 3px solid var(--danger);
+}
+
+.impound-tab {
+    position: relative;
+}
+
+.impound-tab::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 8px;
+    height: 8px;
+    background-color: var(--danger);
+    border-radius: 50%;
+    display: block;
+}
+
+.impound-count {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: var(--danger);
+    color: white;
+    font-size: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-tag.job {
+    background-color: #3498db;
+    color: white;
+}

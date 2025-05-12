@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DW Garages System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <div id="quantum-garage" class="hidden">
+            <header class="garage-header">
+                <div class="logo-container">
+                    <div class="garage-logo">DW</div>
+                    <div class="garage-title">
+                        <h1>GARAGE SYSTEM</h1>
+                        <span id="current-garage-name">Legion Square Garage</span>
+                    </div>
+                </div>
+                <div class="garage-controls">
+                    <div class="search-wrapper">
+                        <input type="text" id="quantum-search" placeholder="Search vehicles...">
+                        <button class="search-btn">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <button id="close-quantum" class="control-btn">
+                        <span class="btn-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </header>
+            
+            <div class="main-container">
+                <div class="garage-sidebar">
+                    <button class="nav-item active" data-category="all">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 9H21M3 15H21M7 3V21M17 3V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>All Vehicles</span>
+                    </button>
+                    <button class="nav-item" data-category="favorites">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Favorites</span>
+                    </button>
+                    <button class="nav-item" data-category="shared" id="shared-category">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 8C19.6569 8 21 6.65685 21 5C21 3.34315 19.6569 2 18 2C16.3431 2 15 3.34315 15 5C15 6.65685 16.3431 8 18 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6 15C7.65685 15 9 13.6569 9 12C9 10.3431 7.65685 9 6 9C4.34315 9 3 10.3431 3 12C3 13.6569 4.34315 15 6 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M18 22C19.6569 22 21 20.6569 21 19C21 17.3431 19.6569 16 18 16C16.3431 16 15 17.3431 15 19C15 20.6569 16.3431 22 18 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8.59 13.51L15.42 17.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M15.41 6.51L8.59 10.49" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Shared</span>
+                    </button>
+                    <button class="nav-item" data-category="impound" id="impound-category">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 11V7C8 5.93913 8.42143 4.92172 9.17157 4.17157C9.92172 3.42143 10.9391 3 12 3C13.0609 3 14.0783 3.42143 14.8284 4.17157C15.5786 4.92172 16 5.93913 16 7V11M5 11H19C20.1046 11 21 11.8954 21 13V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V13C3 11.8954 3.89543 11 5 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Impound</span>
+                        <div class="impound-count" id="impound-count">0</div>
+                    </button>
+                    <button class="nav-item" id="manage-shared" data-action="manage-shared">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M19.4 15C19.1277 15.8031 19.2583 16.6975 19.7519 17.3981L19.8019 17.4481C20.2058 17.8521 20.4146 18.4085 20.3821 18.9784C20.3496 19.5482 20.0798 20.0782 19.6349 20.4388C19.1901 20.7995 18.6161 20.9629 18.0465 20.8947C17.4769 20.8266 16.9568 20.533 16.61 20.07L16.56 20.02C15.9827 19.4972 15.1864 19.2944 14.44 19.47C13.7075 19.6461 13.1143 20.156 12.88 20.83L12.86 20.88C12.686 21.4381 12.2994 21.8996 11.7913 22.1531C11.2833 22.4065 10.6991 22.4325 10.1713 22.2254C9.64339 22.0184 9.22869 21.5968 9.03528 21.071C8.84187 20.5452 8.88485 19.9608 9.15 19.47V19.47C9.4281 18.8095 9.33115 18.0548 8.89 17.48L8.76 17.33C8.39322 16.8755 7.83234 16.6104 7.23191 16.6219C6.63148 16.6334 6.08161 16.9204 5.73209 17.3904C5.38257 17.8604 5.27411 18.4626 5.44163 19.0245C5.60915 19.5864 6.03235 20.0394 6.58 20.24C7.28521 20.492 7.83946 21.0469 8.08 21.75L8.09 21.79C8.30025 22.3458 8.2487 22.9663 7.95469 23.4706C7.66068 23.9749 7.15493 24.3134 6.58 24.39H6.5C5.88831 24.4638 5.2732 24.2604 4.82271 23.8312C4.37222 23.4021 4.13191 22.7947 4.17 22.18L4.18 22C4.28259 21.2304 4.02246 20.4557 3.47 19.88L3.4 19.81C2.99604 19.4061 2.78729 18.8497 2.81976 18.2799C2.85224 17.71 3.12204 17.18 3.56689 16.8194C4.01174 16.4588 4.58574 16.2953 5.15535 16.3635C5.72497 16.4316 6.24503 16.7252 6.59 17.19L6.64 17.24C7.21732 17.7628 8.01357 17.9656 8.76 17.79C9.4925 17.6139 10.0857 17.104 10.32 16.43L10.34 16.38C10.514 15.8219 10.9006 15.3604 11.4087 15.1069C11.9167 14.8535 12.5009 14.8275 13.0287 15.0345C13.5566 15.2416 13.9713 15.6632 14.1647 16.189C14.3581 16.7148 14.3151 17.2992 14.05 17.79V17.79C13.7719 18.4505 13.8689 19.2052 14.31 19.78L14.44 19.93C14.8068 20.3845 15.3677 20.6496 15.9681 20.6381C16.5685 20.6266 17.1184 20.3396 17.4679 19.8696C17.8174 19.3996 17.9259 18.7974 17.7584 18.2355C17.5908 17.6736 17.1676 17.2206 16.62 17.02C15.9148 16.768 15.3605 16.2131 15.12 15.51L15.11 15.47C14.8998 14.9142 14.9513 14.2937 15.2453 13.7894C15.5393 13.2851 16.0451 12.9466 16.62 12.87H16.7C17.3117 12.7962 17.9268 12.9996 18.3773 13.4288C18.8278 13.8579 19.0681 14.4653 19.03 15.08L19.02 15.26C18.9174 16.0296 19.1775 16.8043 19.73 17.38L19.8 17.45C20.2039 17.8539 20.4127 18.4103 20.3802 18.9801C20.3478 19.55 20.078 20.08 19.6331 20.4406C19.1883 20.8012 18.6143 20.9647 18.0447 20.8965C17.475 20.8284 16.955 20.5348 16.61 20.07L16.56 20.02C15.9826 19.4972 15.1864 19.2944 14.44 19.47C13.7075 19.6461 13.1143 20.156 12.88 20.83L12.86 20.88C12.686 21.4381 12.2994 21.8996 11.7913 22.1531C11.2833 22.4065 10.6991 22.4325 10.1713 22.2254C9.64339 22.0184 9.22869 21.5968 9.03528 21.071C8.84187 20.5452 8.88485 19.9608 9.15 19.47V19.47C9.4281 18.8095 9.33115 18.0548 8.89 17.48C8.46085 16.9059 7.7346 16.6162 7 16.67H6.8C6.17971 16.7432 5.57115 16.4718 5.17097 15.9635C4.77079 15.4551 4.62868 14.7712 4.79 14.13V14.13C4.94015 13.5388 5.35729 13.0475 5.91 12.84" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Manage Shared</span>
+                    </button>
+            <button class="nav-item" data-category="jobvehicles" id="job-vehicles-category">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 3H1V16H16V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16 8H20L23 11V16H16V8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5.5 21C6.88071 21 8 19.8807 8 18.5C8 17.1193 6.88071 16 5.5 16C4.11929 16 3 17.1193 3 18.5C3 19.8807 4.11929 21 5.5 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18.5 21C19.8807 21 21 19.8807 21 18.5C21 17.1193 19.8807 16 18.5 16C17.1193 16 16 17.1193 16 18.5C16 19.8807 17.1193 21 18.5 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Job Vehicles</span>
+            </button>
+                </div>
+                
+                <div class="garage-content">
+                    <div id="shared-garage-select" class="shared-garage-select hidden">
+                        <div class="shared-garage-select-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h2>Select a Shared Garage</h2>
+                        <p>Choose which shared garage you want to access:</p>
+                        <button id="select-shared-garage" class="shared-garage-select-btn">SELECT GARAGE</button>
+                    </div>
+
+                    <div class="vehicle-grid" id="vehicles-carousel">
+                    </div>
+                    
+                    <div id="empty-state" class="empty-state hidden">
+                        <div class="empty-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 6V4C16 2.89543 15.1046 2 14 2H10C8.89543 2 8 2.89543 8 4V6M3 6H21M19 6V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h2>No Vehicles Found</h2>
+                        <p>There are no vehicles in this category</p>
+                    </div>
+                    
+                    <div class="vehicle-info-panel" id="vehicle-info-panel">
+                        <div class="info-container">
+                            <div class="info-header">
+                                <h2 id="info-vehicle-name">SELECT A VEHICLE</h2>
+                                <div id="info-plate" class="vehicle-plate"></div>
+                            </div>
+                            
+                            <div class="info-content">
+                                <div class="no-selection-message" id="no-selection">
+                                    <div class="pulse-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 2L20 7L12 12L4 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                            <path d="M20 17L12 22L4 17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                            <path d="M20 12L12 17L4 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <p>Select a vehicle to view details</p>
+                                </div>
+                                
+                                <div class="vehicle-details hidden" id="vehicle-details">
+                                    <div class="specs-container">
+                                        <div class="spec-item">
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14 2H6C5.44772 2 5 2.44772 5 3V21C5 21.5523 5.44772 22 6 22H18C18.5523 22 19 21.5523 19 21V7L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M14 2V7H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <div class="spec-info">
+                                                <span class="spec-label">Model</span>
+                                                <span class="spec-value" id="info-model">-</span>
+                                            </div>
+                                        </div>
+                                        <div class="spec-item">
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M17 21V19C17 16.7909 15.2091 15 13 15H5C2.79086 15 1 16.7909 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M23 21V19C22.9986 17.1771 21.765 15.5857 20 15.13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M16 3.13C17.7699 3.58317 19.0078 5.17883 19.0078 7.005C19.0078 8.83117 17.7699 10.4268 16 10.88" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <div class="spec-info">
+                                                <span class="spec-label">Owner</span>
+                                                <span class="spec-value" id="info-owner">-</span>
+                                            </div>
+                                        </div>
+                                        <div class="spec-item">
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <div class="spec-info">
+                                                <span class="spec-label">Garage</span>
+                                                <span class="spec-value" id="info-garage">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="status-container">
+                                        <h3>Vehicle Status</h3>
+                                        <div class="status-bars">
+                                            <div class="status-item">
+                                                <div class="status-label">
+                                                    <span>Fuel</span>
+                                                    <span id="fuel-percentage">0%</span>
+                                                </div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill fuel" id="fuel-bar"></div>
+                                                </div>
+                                            </div>
+                                            <div class="status-item">
+                                                <div class="status-label">
+                                                    <span>Engine</span>
+                                                    <span id="engine-percentage">0%</span>
+                                                </div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill engine" id="engine-bar"></div>
+                                                </div>
+                                            </div>
+                                            <div class="status-item">
+                                                <div class="status-label">
+                                                    <span>Body</span>
+                                                    <span id="body-percentage">0%</span>
+                                                </div>
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill body" id="body-bar"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="vehicle-actions">
+                                        <button id="take-out-btn" class="action-btn primary-action">
+                                            <span class="action-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </span>
+                                            <span class="action-text">Take Out</span>
+                                        </button>
+                                        <div class="secondary-actions">
+                                            <button id="favorite-btn" class="action-btn secondary-action">
+                                                <span class="action-icon">
+                                                    <svg class="favorite-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </span>
+                                                <span class="action-text">Favorite</span>
+                                            </button>
+                                            <button id="rename-btn" class="action-btn secondary-action">
+                                                <span class="action-icon">
+                                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 2.50001C21.8978 2.89784 22.1213 3.4374 22.1213 4.00001C22.1213 4.56262 21.8978 5.10219 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </span>
+                                                <span class="action-text">Rename</span>
+                                            </button>
+                                            <button id="share-btn" class="action-btn secondary-action">
+                                                <span class="action-icon">
+                                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M4 12V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M16 6L12 2L8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        <path d="M12 2V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </span>
+                                                <span class="action-text">Share</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="loading-overlay" class="loading-overlay hidden">
+                <div class="garage-loader">
+                    <div class="loader-ring"></div>
+                    <span>Loading...</span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="rename-modal" class="garage-modal hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h2>Rename Vehicle</h2>
+                    <button class="close-modal">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <label for="vehicle-name-input">New Name</label>
+                        <input type="text" id="vehicle-name-input" class="garage-input" placeholder="Enter new vehicle name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancel-rename" class="garage-btn secondary">Cancel</button>
+                    <button id="save-rename" class="garage-btn primary">Save</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="transfer-modal" class="garage-modal hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h2>Transfer Vehicle</h2>
+                    <button class="close-modal">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-description">Transfer your vehicle to another garage for a fee of $<span id="transfer-cost">500</span>:</p>
+                    <div class="input-group">
+                        <label for="transfer-garage-select">Select Destination Garage</label>
+                        <select id="transfer-garage-select" class="garage-input">
+                            <option value="">-- Select Garage --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancel-transfer" class="garage-btn secondary">Cancel</button>
+                    <button id="confirm-transfer" class="garage-btn primary">Transfer for $<span id="transfer-btn-cost">500</span></button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="shared-garage-modal" class="garage-modal hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-container shared-garage-container">
+                <div class="modal-header">
+                    <h2>Shared Garages</h2>
+                    <button class="close-modal" id="close-shared-modal">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="shared-tabs">
+                    <button class="shared-tab active" data-tab="my-garages">My Garages</button>
+                    <button class="shared-tab" data-tab="join-garage">Join Garage</button>
+                    <button class="shared-tab" data-tab="create-garage">Create New</button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content" id="my-garages-tab">
+                        <div id="shared-garages-list" class="garage-list">
+                        </div>
+                        <div id="no-shared-garages" class="tab-empty-state hidden">
+                            <div class="empty-icon">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <h3>No Shared Garages</h3>
+                            <p>You don't have any shared garages yet. Create one or join an existing garage.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content hidden" id="join-garage-tab">
+                        <div class="input-container">
+                            <div class="input-group">
+                                <label for="join-code">Enter Access Code</label>
+                                <input type="text" id="join-code" class="garage-input" placeholder="Enter 4-digit code" maxlength="4">
+                            </div>
+                            <button id="join-garage-btn" class="garage-btn primary full-width">Join Garage</button>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content hidden" id="create-garage-tab">
+                        <div class="input-container">
+                            <div class="input-group">
+                                <label for="new-garage-name">Garage Name</label>
+                                <input type="text" id="new-garage-name" class="garage-input" placeholder="Enter a name for your garage">
+                            </div>
+                            <button id="create-garage-btn" class="garage-btn primary full-width">Create Garage</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="garage-selection-modal" class="garage-modal hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h2>Select Shared Garage</h2>
+                    <button class="close-modal">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-description">Select a shared garage to store your vehicle:</p>
+                    <div id="garage-options" class="garage-options">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="shared-garage-selector-modal" class="garage-modal hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h2>Select Shared Garage</h2>
+                    <button class="close-modal">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-description">Select a shared garage to view:</p>
+                    <div id="shared-garage-list" class="shared-garage-list">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="members-modal" class="garage-modal hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h2>Garage Members</h2>
+                    <button class="close-modal">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="members-list" class="members-list">
+                    </div>
+                    <div id="no-members" class="tab-empty-state hidden">
+                        <div class="empty-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 21V19C17 16.7909 15.2091 15 13 15H5C2.79086 15 1 16.7909 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M23 21V19C22.9986 17.1771 21.765 15.5857 20 15.13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 3.13C17.7699 3.58317 19.0078 5.17883 19.0078 7.005C19.0078 8.83117 17.7699 10.4268 16 10.88" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>No Members</h3>
+                        <p>There are no members in this garage yet. Share your garage code to invite others.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="join-request-modal" class="garage-modal hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-container">
+                <div class="modal-header">
+                    <h2>Garage Join Request</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="request-details">
+                        <p><span id="requester-name">Someone</span> wants to join your garage <strong id="request-garage-name">Garage</strong></p>
+                    </div>
+                </div>
+                <div class="modal-footer split">
+                    <button id="deny-request-btn" class="garage-btn danger">Deny</button>
+                    <button id="approve-request-btn" class="garage-btn success">Approve</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="vehicle-hover-panel" class="vehicle-hover-panel hidden">
+            <div class="hover-content">
+                <div class="hover-header">
+                    <h3 id="hover-vehicle-name">Vehicle Name</h3>
+                    <div id="hover-vehicle-plate" class="hover-plate">ABC123</div>
+                </div>
+                <div class="hover-stats">
+                    <div class="hover-stat">
+                        <span class="stat-name">Fuel</span>
+                        <div class="hover-stat-bar">
+                            <div id="hover-fuel-bar" class="hover-stat-fill fuel"></div>
+                        </div>
+                        <span id="hover-fuel-value" class="stat-value">0%</span>
+                    </div>
+                    <div class="hover-stat">
+                        <span class="stat-name">Engine</span>
+                        <div class="hover-stat-bar">
+                            <div id="hover-engine-bar" class="hover-stat-fill engine"></div>
+                        </div>
+                        <span id="hover-engine-value" class="stat-value">0%</span>
+                    </div>
+                    <div class="hover-stat">
+                        <span class="stat-name">Body</span>
+                        <div class="hover-stat-bar">
+                            <div id="hover-body-bar" class="hover-stat-fill body"></div>
+                        </div>
+                        <span id="hover-body-value" class="stat-value">0%</span>
+                    </div>
+                </div>
+                <div class="hover-actions">
+                    <button id="hover-enter-btn" class="hover-btn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Enter</span>
+                    </button>
+                    <button id="hover-store-btn" class="hover-btn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 8H19M5 8C3.89543 8 3 7.10457 3 6C3 4.89543 3.89543 4 5 4H19C20.1046 4 21 4.89543 21 6C21 7.10457 20.1046 8 19 8M5 8L5 18C5 19.1046 5.89543 20 7 20H17C18.1046 20 19 19.1046 19 18V8M10 12H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Store</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+<div id="impound-modal" class="garage-modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-container">
+        <div class="modal-header impound-header">
+            <h2>Vehicle Impound</h2>
+            <button class="close-modal">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div id="impound-vehicle-details">
+                <h3 id="impound-vehicle-name">Vehicle Name</h3>
+                <div class="impound-plate" id="impound-plate">ABC123</div>
+                
+                <div class="status-bars">
+                    <div class="status-item">
+                        <div class="status-label">
+                            <span>Fuel</span>
+                            <span id="impound-fuel-percentage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill fuel" id="impound-fuel-bar"></div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-label">
+                            <span>Engine</span>
+                            <span id="impound-engine-percentage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill engine" id="impound-engine-bar"></div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-label">
+                            <span>Body</span>
+                            <span id="impound-body-percentage">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill body" id="impound-body-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="impound-details">
+                    <div class="impound-detail">
+                        <div class="impound-label">Impounded By:</div>
+                        <div class="impound-value" id="impounded-by">Officer Name</div>
+                    </div>
+                    <div class="impound-detail">
+                        <div class="impound-label">Impound Type:</div>
+                        <div class="impound-value" id="impound-type">Police</div>
+                    </div>
+                    <div class="impound-detail">
+                        <div class="impound-label">Time in Impound:</div>
+                        <div class="impound-value" id="impound-days">1 day(s)</div>
+                    </div>
+                    <div class="impound-detail">
+                        <div class="impound-label">Release Fee:</div>
+                        <div class="impound-fee" id="impound-fee">$500</div>
+                    </div>
+                    <div class="impound-label">Reason:</div>
+                    <div class="impound-reason" id="impound-reason">Illegally parked vehicle</div>
+                </div>
+                
+                <div class="impound-warning">
+                    Payment will be automatically deducted from your cash or bank account
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="cancel-release" class="garage-btn secondary">Cancel</button>
+            <button id="confirm-release" class="garage-btn release-btn">Pay & Release Vehicle</button>
+        </div>
+    </div>
+</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
