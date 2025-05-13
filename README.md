@@ -37,6 +37,76 @@
 2. Extract to your resources folder
 3. Rename the folder to `dw-garages`
 
+⚙️ Configuration
+Basic Configuration Options
+
+
+```lua
+ Config = {
+    UseTarget = false,                 -- Use qb-target instead of DrawText3D
+    VehicleSpawnDistance = 5.0,        -- Distance to spawn vehicles from the garage point
+    TransferCost = 500,                -- Cost to transfer vehicles between garages
+    EnableTransferAnimation = true,    -- Enable/disable the transfer truck animation
+    EnableImpound = true,              -- Enable the impound system
+    ImpoundFee = 500                   -- Base fee for impound retrieval
+}
+```
+Adding New Garages
+To add a new garage, add a new entry to the Config.Garages table in config.lua:
+
+```lua
+Config.Garages = {
+    yourgarage = {
+        label = 'Your New Garage',
+        coords = vector4(215.9, -810.65, 30.73, 339.54),
+        type = 'public',
+        spawnPoints = {
+            vector4(222.89, -804.16, 30.15, 248.0),
+            vector4(224.51, -798.82, 30.15, 248.0)
+        },
+        transferSpawn = vector4(195.4, -825.3, 30.2, 340.0),
+        transferArrival = vector4(213.2, -799.8, 30.1, 250.0),
+        transferExit = vector4(178.5, -833.6, 30.8, 160.0)
+    }
+}
+```
+
+Adding Job Vehicles`
+To add vehicles to job garages, edit the Config.JobGarages table:
+
+```lua
+Config.JobGarages = {
+    police = {
+        label = 'Police Garage',
+        coords = vector4(454.6, -1017.4, 28.4, 90.0),
+        type = 'job',
+        job = 'police',
+        spawnPoint = vector4(438.4, -1018.3, 27.7, 90.0),
+        vehicles = {
+            newvehicle = {
+                label = 'New Police Vehicle',
+                model = 'policeb',
+                icon = '🏍️'
+            }
+        }
+    }
+}
+```
+
+Blip Settings
+Garage blip settings can be configured inside:
+
+```lua
+Config.GarageBlip = {
+    Enable = true,
+    Sprite = 357,
+    Color = 3,
+    Scale = 0.7,
+    Display = 4,
+    ShortRange = true
+}
+```
+
 ### Step 2: Database Setup
 Run the included SQL file in your database:
 
@@ -57,61 +127,76 @@ ensure dw-garages
 2. Check the server console for any error messages
 3. In-game, visit any garage location to verify the script is working
 
-## ⚙️ Configuration
 
-**IMPORTANT:** Do not modify `config.lua` directly as it is encrypted. All configuration should be done through `config.json`.
-
-### Basic Configuration Options
-
-```json
-{
-  "UseTarget": false,           // Use qb-target instead of DrawText3D
-  "VehicleSpawnDistance": 5.0,  // Distance to spawn vehicles from the garage point
-  "TransferCost": 500,          // Cost to transfer vehicles between garages
-  "EnableTransferAnimation": true, // Enable/disable the transfer truck animation
-  "EnableImpound": true,        // Enable the impound system
-  "ImpoundFee": 500             // Base fee for impound retrieval
+Basic Configuration Options
+lua
+Copy
+Edit
+Config = {
+    UseTarget = false,                 -- Use qb-target instead of DrawText3D
+    VehicleSpawnDistance = 5.0,        -- Distance to spawn vehicles from the garage point
+    TransferCost = 500,                -- Cost to transfer vehicles between garages
+    EnableTransferAnimation = true,    -- Enable/disable the transfer truck animation
+    EnableImpound = true,              -- Enable the impound system
+    ImpoundFee = 500                   -- Base fee for impound retrieval
 }
-```
+Adding New Garages
+To add a new garage, add a new entry to the Config.Garages table in config.lua:
 
-### Adding New Garages
-
-To add a new garage, add a new entry to the "Garages" section of config.json:
-
-```json
-"Garages": {
-  "yourgarage": {
-    "label": "Your New Garage",
-    "coords": {"x": 215.9, "y": -810.65, "z": 30.73, "w": 339.54},
-    "type": "public",
-    "spawnPoints": [
-      {"x": 222.89, "y": -804.16, "z": 30.15, "w": 248.0},
-      {"x": 224.51, "y": -798.82, "z": 30.15, "w": 248.0}
-    ],
-    "transferSpawn": {"x": 195.4, "y": -825.3, "z": 30.2, "w": 340.0},
-    "transferArrival": {"x": 213.2, "y": -799.8, "z": 30.1, "w": 250.0},
-    "transferExit": {"x": 178.5, "y": -833.6, "z": 30.8, "w": 160.0}
-  }
-}
-```
-
-### Adding Job Vehicles
-
-To add vehicles to job garages:
-
-```json
-"JobGarages": {
-  "police": {
-    "vehicles": {
-      "newvehicle": {
-        "label": "New Police Vehicle",
-        "model": "policeb",
-        "icon": "🏍️"
-      }
+bash
+Copy
+Edit
+Config.Garages = {
+    yourgarage = {
+        label = 'Your New Garage',
+        coords = vector4(215.9, -810.65, 30.73, 339.54),
+        type = 'public',
+        spawnPoints = {
+            vector4(222.89, -804.16, 30.15, 248.0),
+            vector4(224.51, -798.82, 30.15, 248.0)
+        },
+        transferSpawn = vector4(195.4, -825.3, 30.2, 340.0),
+        transferArrival = vector4(213.2, -799.8, 30.1, 250.0),
+        transferExit = vector4(178.5, -833.6, 30.8, 160.0)
     }
-  }
 }
-```
+Adding Job Vehicles
+To add vehicles to job garages, edit the Config.JobGarages table:
+
+bash
+Copy
+Edit
+Config.JobGarages = {
+    police = {
+        label = 'Police Garage',
+        coords = vector4(454.6, -1017.4, 28.4, 90.0),
+        type = 'job',
+        job = 'police',
+        spawnPoint = vector4(438.4, -1018.3, 27.7, 90.0),
+        vehicles = {
+            newvehicle = {
+                label = 'New Police Vehicle',
+                model = 'policeb',
+                icon = '🏍️'
+            }
+        }
+    }
+}
+Blip Settings
+Garage blip settings can be configured inside:
+
+pgsql
+Copy
+Edit
+Config.GarageBlip = {
+    Enable = true,
+    Sprite = 357,
+    Color = 3,
+    Scale = 0.7,
+    Display = 4,
+    ShortRange = true
+}
+
 
 ## 🔍 JSON Editing Tips
 
