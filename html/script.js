@@ -1568,24 +1568,38 @@ function removeFromSharedGarage(plate) {
 function takeOutVehicle() {
     if (!selectedVehicle || selectedVehicle.state === 0) return;
     
-    // Mark this vehicle as taken out so it can't be taken out again
     vehiclesAlreadyOut[selectedVehicle.plate] = true;
     
-    // Remove this vehicle from all arrays immediately
+
     vehicles = vehicles.filter(v => v.plate !== selectedVehicle.plate);
     originalVehicles = originalVehicles.filter(v => v.plate !== selectedVehicle.plate);
     currentVehicles = currentVehicles.filter(v => v.plate !== selectedVehicle.plate);
     
     // Refresh the UI to remove this vehicle from view
     renderVehicles();
-    
-    // Then proceed with the server-side takeout
+
     fetch(`https://${GetParentResourceName()}/takeOutVehicle`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(selectedVehicle)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .catch(error => {
+        console.error("Error taking out vehicle:", error);
+        // Restore the vehicle in the lists if the request failed
+        if (!vehicles.some(v => v.plate === selectedVehicle.plate)) {
+            vehicles.push(selectedVehicle);
+            originalVehicles.push(selectedVehicle);
+            currentVehicles.push(selectedVehicle);
+            renderVehicles();
+        }
     });
     
     closeGarage();
