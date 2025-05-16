@@ -1910,9 +1910,8 @@ RegisterNUICallback('closeGarage', function(data, cb)
     cb({status = "success"})
 end)
 
+-- Fix for takeOutVehicle NUI callback
 RegisterNUICallback('takeOutVehicle', function(data, cb)
-    local garageId = currentGarage.id
-    local garageType = currentGarage.type
     local plate = data.plate
     local model = data.model
     
@@ -1921,24 +1920,26 @@ RegisterNUICallback('takeOutVehicle', function(data, cb)
     
     if data.state == 0 then
         QBCore.Functions.Notify("This vehicle is already out of the garage.", "error")
+        cb({status = "error", message = "Vehicle already out"})
         return
     end
     
     QBCore.Functions.TriggerCallback('dw-garages:server:GetVehicleByPlate', function(vehData, isOut)
         if isOut then
             QBCore.Functions.Notify("This vehicle is already outside.", "error")
+            cb({status = "error", message = "Vehicle already out"})
             return
         end
         
         local garageInfo = {}
-        if garageType == "public" then
-            garageInfo = Config.Garages[garageId]
-        elseif garageType == "job" then
-            garageInfo = Config.JobGarages[garageId]
-        elseif garageType == "gang" then
-            garageInfo = Config.GangGarages[garageId]
-        elseif garageType == "shared" then
-            garageInfo = sharedGaragesData[garageId]
+        if currentGarage.type == "public" then
+            garageInfo = Config.Garages[currentGarage.id]
+        elseif currentGarage.type == "job" then
+            garageInfo = Config.JobGarages[currentGarage.id]
+        elseif currentGarage.type == "gang" then
+            garageInfo = Config.GangGarages[currentGarage.id]
+        elseif currentGarage.type == "shared" then
+            garageInfo = sharedGaragesData[currentGarage.id]
         end
         
         local spawnPoints = nil
@@ -1951,30 +1952,39 @@ RegisterNUICallback('takeOutVehicle', function(data, cb)
         local clearPoint = FindClearSpawnPoint(spawnPoints)
         if not clearPoint then
             QBCore.Functions.Notify("All spawn locations are blocked!", "error")
+            cb({status = "error", message = "Spawn locations blocked"})
             return
         end
         
-        if garageType == "shared" then
+        if currentGarage.type == "shared" then
             QBCore.Functions.TriggerCallback('dw-garages:server:CheckSharedAccess', function(hasAccess)
                 if hasAccess then
-                    TriggerServerEvent('dw-garages:server:TakeOutSharedVehicle', plate, garageId)
+                    TriggerServerEvent('dw-garages:server:TakeOutSharedVehicle', plate, currentGarage.id)
+                    cb({status = "success"})
                 else
                     QBCore.Functions.Notify("You don't have access to this vehicle", "error")
+                    cb({status = "error", message = "No access"})
                 end
-            end, plate, garageId)
+            end, plate, currentGarage.id)
             return
         end
         
         local spawnCoords = vector3(clearPoint.x, clearPoint.y, clearPoint.z)
         
         QBCore.Functions.SpawnVehicle(model, function(veh)
+            if not veh or veh == 0 then
+                QBCore.Functions.Notify("Failed to spawn vehicle", "error")
+                cb({status = "error", message = "Failed to spawn"})
+                return
+            end
+            
             SetEntityHeading(veh, clearPoint.w)
             exports['LegacyFuel']:SetFuel(veh, data.fuel)
             SetVehicleNumberPlateText(veh, plate)
             
             FadeInVehicle(veh)
             
-            if garageType == "public" or garageType == "gang" then
+            if currentGarage.type == "public" or currentGarage.type == "gang" then
                 QBCore.Functions.TriggerCallback('dw-garages:server:GetVehicleProperties', function(properties)
                     if properties then
                         QBCore.Functions.SetVehicleProperties(veh, properties)
@@ -1993,11 +2003,14 @@ RegisterNUICallback('takeOutVehicle', function(data, cb)
                         
                         TriggerServerEvent('dw-garages:server:UpdateVehicleState', plate, 0)
                         
-                        if garageType == "gang" and data.storedInGang then
+                        if currentGarage.type == "gang" and data.storedInGang then
                             TriggerServerEvent('dw-garages:server:UpdateGangVehicleState', plate, 0)
                         end
                         
                         QBCore.Functions.Notify("Vehicle taken out", "success")
+                        cb({status = "success"})
+                    else
+                        cb({status = "error", message = "Failed to load properties"})
                     end
                 end, plate)
             else 
@@ -2010,6 +2023,7 @@ RegisterNUICallback('takeOutVehicle', function(data, cb)
                 FixEngineSmoke(veh)
                 
                 QBCore.Functions.Notify("Job vehicle taken out", "success")
+                cb({status = "success"})
             end
         end, spawnCoords, true)
     end, plate)
@@ -3589,3 +3603,4 @@ RegisterNUICallback('closeImpound', function(data, cb)
     SetNuiFocus(false, false)
     cb({status = "success"})
 end)
+
