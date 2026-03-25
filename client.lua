@@ -337,6 +337,12 @@ AddEventHandler('dw-garages:client:DeleteGarage', function(garageId)
     TriggerServerEvent('dw-garages:server:DeleteSharedGarage', garageId)
 end)
 
+RegisterNUICallback('forceCloseGarage', function(data, cb)
+    SetNuiFocus(false, false)
+    isMenuOpen = false
+    cb({status = "ok"})
+end)
+
 RegisterNUICallback('confirmRemoveVehicle', function(data, cb)
     local plate = data.plate
     
@@ -3395,6 +3401,17 @@ end, false)
 TriggerEvent('chat:addSuggestion', '/impound', 'Impound a vehicle with custom fine', {
     { name = "fine", help = "Fine amount ($100-$10,000)" }
 })
+
+CreateThread(function()
+    while true do
+        Wait(500)
+        if isMenuOpen and IsControlJustPressed(0, 200) then
+            SetNuiFocus(false, false)
+            isMenuOpen = false
+            SendNUIMessage({ action = "closeGarage" })
+        end
+    end
+end)
 
 
 function OpenImpoundUI(vehicles, impoundInfo, impoundId)
